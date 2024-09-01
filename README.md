@@ -15,6 +15,16 @@ The recursive function `canEscape` checks:
 3. **Battle**: If Abhimanyu has sufficient energy, simulate the battle and recurse to the next circle.
 4. **Skip**: If skips are available, recurse to the next circle without battling.
 5. **Recharge**: If recharges are available, recharge Abhimanyu's energy and recurse.
+### Handling Special Cases: 3rd and 7th Circles
+
+The 3rd and 7th circles (4th and 8th in 1-based indexing) are special because the enemies here can regenerate and attack Abhimanyu from behind. Here's how these cases are handled:
+
+- When Abhimanyu enters the 4th or 8th circle (`current_circle == 3` or `current_circle == 7` in 0-based indexing):
+  - If Abhimanyu was attacked from behind in the previous circle (`prev_attacked` is `true`), the power required to cross the current circle (`curPowerNeed`) is increased by half the power of the previous enemy.
+  - This adjustment simulates the behind-the-back attack by the regenerated enemy.
+
+This ensures that Abhimanyu's energy is appropriately reduced when facing these special enemies, making the algorithm more robust and accurate.
+
 
 ### Time Complexity
 
@@ -26,20 +36,26 @@ The space complexity is `O(n * p * a * b * 2)` due to the 5D DP vector used to s
 
 ## Test Cases
 
-## Test Cases
 
-### Test Case 1
-- **Input:**
-  - `p: 50`
-  - `a: 1`
-  - `b: 1`
-  - `k: 46 5 4 10 9 4 2 1 40 1 2`
-- **Expected Output:** Abhimanyu can cross the Chakravyuha.
-- **Explanation:** 
-  - Abhimanyu starts with 50 power. 
-  - He fights the first enemy with 46 power, reducing his energy to 4.
-  - Since his energy is insufficient to fight the next enemy, he uses his single recharge, returning to 50 power.
-  - He continues fighting, skipping one enemy, and finally crosses all circles successfully.
+### Test Case 1:
+- **Initial Energy (p)**: 50
+- **Skips (a)**: 1
+- **Recharges (b)**: 1
+- **Enemy Powers (k)**: 46, 5, 4, 10, 9, 4, 2, 1, 40, 1, 2
+
+**Steps:**
+1. **Circle 1**: Abhimanyu battles with an enemy of power 46. Remaining energy = 4.
+2. **Recharge**: Abhimanyu recharges to full energy (50).
+3. **Circle 2**: Abhimanyu battles with an enemy of power 5. Remaining energy = 45.
+4. **Circle 3**: Abhimanyu battles with an enemy of power 4. Remaining energy = 41.
+5. **Circle 4**: Abhimanyu battles with an enemy of power 12 (10 + half of previous power). Remaining energy = 29.
+6. **Circle 5**: Abhimanyu battles with an enemy of power 9. Remaining energy = 20.
+7. **Circle 6**:  Abhimanyu battles with an enemy of power 4. Remaining energy = 16.
+8. **Circle 7**: Abhimanyu battles with an enemy of power 2. Remaining energy = 14.
+9. **Circle 8**: Abhimanyu battles with an enemy of power 3 (1 + half of previous power). Remaining energy = 12.
+10. **Circle 9**: Abhimanyu skips this circle.
+11. **Circle 10**: Abhimanyu battles with an enemy of power 1. Remaining energy = 11.
+12. **Circle 11**: Abhimanyu battles with an enemy of power 2. Remaining energy = 9.
 
 ### Test Case 2
 - **Input:**
