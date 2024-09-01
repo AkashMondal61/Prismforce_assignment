@@ -42,7 +42,7 @@ The space complexity is `O(n * p * a * b * 2)` due to the 5D DP vector used to s
 - **Skips (a)**: 1
 - **Recharges (b)**: 1
 - **Enemy Powers (k)**: 46, 5, 4, 10, 9, 4, 2, 1, 40, 1, 2
-
+- **Expected Output:** Abhimanyu cannot cross the Chakravyuha.
 **Steps:**
 1. **Circle 1**: Abhimanyu battles with an enemy of power 46. Remaining energy = 4.
 2. **Recharge**: Abhimanyu recharges to full energy (50).
